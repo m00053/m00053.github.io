@@ -1,6 +1,9 @@
+import os
 import datetime
 
-# Dynamische Daten ermitteln
+# Ordner erstellen, falls er nicht existiert
+os.makedirs("public", exist_ok=True)
+
 now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 html_content = f"""
@@ -18,6 +21,6 @@ html_content = f"""
 </html>
 """
 
-# Als index.html im Hauptverzeichnis speichern
-with open("index.html", "w", encoding="utf-8") as f:
+# Als index.html im Ordner 'public' speichern
+with open("public/index.html", "w", encoding="utf-8") as f:
     f.write(html_content)
