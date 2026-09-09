@@ -2,7 +2,7 @@ name: Python Page Builder & Deploy
 
 on:
   push:
-    branches: ["main"] # Bitte hier 'master' eintragen, falls Ihr Standard-Branch master heißt!
+    branches: ["master"] # Bitte hier 'master' eintragen, falls Ihr Standard-Branch master heißt!
   workflow_dispatch:
 
 permissions:
