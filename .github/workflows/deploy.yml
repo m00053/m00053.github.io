@@ -1,4 +1,42 @@
-- name: Dateien für GitHub Pages hochladen
+name: Python Page Builder & Deploy
+
+on:
+  push:
+    branches: ["main"] # Bitte hier 'master' eintragen, falls Ihr Standard-Branch master heißt!
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@v4
+
+      - name: Python einrichten
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Python-Skript ausführen
+        run: python generate_page.py
+
+      - name: Dateien für GitHub Pages hochladen
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'public' # Hier wird der Ordner angegeben, in dem die index.html liegt
+          path: 'public'
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.url }}
+    steps:
+      - name: Auf GitHub Pages deployen
+        id: deployment
+        uses: actions/deploy-pages@v4
